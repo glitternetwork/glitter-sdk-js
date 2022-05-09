@@ -1,0 +1,9 @@
+# we need this for readthedocs
+
+Sphinx
+sphinx-autobuild
+sphinxcontrib-autorun
+sphinxcontrib-napoleon>=0.4.4
+sphinx_rtd_theme
+sphinxcontrib-httpdomain
+sphinx-tabs

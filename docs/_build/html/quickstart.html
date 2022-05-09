@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quickstart &mdash; glitter-sdk-js  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/tabs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/tabs.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Examples" href="examples.html" />
+    <link rel="prev" title="Installation" href="install.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> glitter-sdk-js
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference external" href="https://glitterprotocol.io/">← glitternetwork</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#connection">1.Connection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data-model">2.Data model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#put-doc">3.Put doc</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#search">4.Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#another-search-example">5.Another search example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="libref.html">Library Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">glitter-sdk-js</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Quickstart</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/quickstart.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="quickstart">
+<span id="id1"></span><h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this heading">¶</a></h1>
+<p>Simple introduction to glitter.</p>
+<section id="connection">
+<h2>1.Connection<a class="headerlink" href="#connection" title="Permalink to this heading">¶</a></h2>
+<p>Connect Glitter network using glitter_js package.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">GlitterSdk</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s1">&#39;glitter-sdk-js&#39;</span><span class="p">)</span>
+<span class="n">const</span> <span class="n">client</span> <span class="o">=</span> <span class="n">new</span> <span class="n">GlitterSdk</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="data-model">
+<h2>2.Data model<a class="headerlink" href="#data-model" title="Permalink to this heading">¶</a></h2>
+<p>In the example below we create a schema which is used to describe data model.
+After creation success, you will be able to check the detail of schema info <a class="reference external" href="https://scan.testnet.glitterprotocol.io/txs/D4D9F93B60770952A33BD3C7A8C0F70A72CB78F800AD1C100CA73EBCF2825BDC">here</a>.</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">Code</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">Output</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># create schema with a url and title</span>
+<span class="n">const</span> <span class="n">schema</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;url&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;primary&quot;</span><span class="p">:</span> <span class="s2">&quot;true&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;keyword&quot;</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;title&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+<span class="n">const</span> <span class="n">res</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">create_schema</span><span class="p">(</span><span class="s2">&quot;sample&quot;</span><span class="p">,</span> <span class="n">schema</span><span class="p">)</span>
+<span class="c1"># get the schema you create</span>
+<span class="n">const</span> <span class="n">client</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">get_schema</span><span class="p">(</span><span class="s2">&quot;sample&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;code&quot;</span><span class="o">:</span> <span class="mf">0</span><span class="p">,</span>
+  <span class="s2">&quot;message&quot;</span><span class="o">:</span> <span class="s2">&quot;ok&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;data&quot;</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">&quot;fields&quot;</span><span class="o">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="s2">&quot;index&quot;</span><span class="o">:</span> <span class="p">{</span>
+          <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;keyword&quot;</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;url&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;primary&quot;</span><span class="o">:</span> <span class="s2">&quot;true&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+        <span class="s2">&quot;index&quot;</span><span class="o">:</span> <span class="p">{</span>
+          <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;text&quot;</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;title&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;string&quot;</span>
+      <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;sample&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="o">:</span> <span class="s2">&quot;record&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></div>
+</section>
+<section id="put-doc">
+<h2>3.Put doc<a class="headerlink" href="#put-doc" title="Permalink to this heading">¶</a></h2>
+<p>Once the put_doc success, you will be able to see the details of tx <a class="reference external" href="http://sg6.testnet.glitter.link:8000/txs/8A62859FD12A9A4D678812D65CE280501595C0B947C150E7182B7F099B213B01">here</a>.</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">Code</button><button aria-controls="panel-1-1-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-1-1-1" name="1-1" role="tab" tabindex="-1">Output</button></div><div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0"><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">put_res</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">put_doc</span><span class="p">(</span><span class="s2">&quot;sample&quot;</span><span class="p">,</span> <span class="p">{</span>
+        <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://glitterprotocol.io/&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;A Decentralized Content Indexing Network&quot;</span><span class="p">,</span>
+    <span class="p">})</span>
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-1-1-1" class="sphinx-tabs-panel" hidden="true" id="panel-1-1-1" name="1-1" role="tabpanel" tabindex="0"><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;ok&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;tx&quot;</span><span class="p">:</span> <span class="s2">&quot;8A62859FD12A9A4D678812D65CE280501595C0B947C150E7182B7F099B213B01&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></div>
+</section>
+<section id="search">
+<h2>4.Search<a class="headerlink" href="#search" title="Permalink to this heading">¶</a></h2>
+<p>Performing a full-text search.</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-2-2-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-2-2-0" name="2-0" role="tab" tabindex="0">Code</button><button aria-controls="panel-2-2-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-2-2-1" name="2-1" role="tab" tabindex="-1">Output</button></div><div aria-labelledby="tab-2-2-0" class="sphinx-tabs-panel" id="panel-2-2-0" name="2-0" role="tabpanel" tabindex="0"><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># search doc</span>
+<span class="n">const</span> <span class="n">search_res</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;sample&quot;</span><span class="p">,</span> <span class="s2">&quot;Content Indexing Network&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-2-2-1" class="sphinx-tabs-panel" hidden="true" id="panel-2-2-1" name="2-1" role="tabpanel" tabindex="0"><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;ok&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;tx&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;search_time&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
+        <span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;sample&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;meta&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;page&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;current_page&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s2">&quot;total_pages&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s2">&quot;total_results&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+                <span class="s2">&quot;sorted_by&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">[{</span>
+            <span class="s2">&quot;highlight&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;A Decentralized &lt;span&gt;Content&lt;/span&gt; &lt;span&gt;Indexing&lt;/span&gt; &lt;span&gt;Network&lt;/span&gt;&quot;</span><span class="p">]</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;_creator&quot;</span><span class="p">:</span> <span class="s2">&quot;test_broks&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;_schema_name&quot;</span><span class="p">:</span> <span class="s2">&quot;sample&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;A Decentralized Content Indexing Network&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://glitterprotocol.io/&quot;</span>
+            <span class="p">}</span>
+        <span class="p">}],</span>
+        <span class="s2">&quot;facet&quot;</span><span class="p">:</span> <span class="p">{}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></div>
+</section>
+<section id="another-search-example">
+<h2>5.Another search example<a class="headerlink" href="#another-search-example" title="Permalink to this heading">¶</a></h2>
+<p>Below is an example for searching rss data.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># standard query for performing a full-text search</span>
+<span class="n">client</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;rss&quot;</span><span class="p">,</span> <span class="s2">&quot;oppo&quot;</span><span class="p">)</span>
+<span class="c1"># only search title</span>
+<span class="n">client</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;rss&quot;</span><span class="p">,</span> <span class="s2">&quot;oppo&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">])</span>
+<span class="c1"># aggregation by tags</span>
+<span class="n">client</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;rss&quot;</span><span class="p">,</span> <span class="s2">&quot;oppo&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;description&#39;</span><span class="p">],</span> <span class="n">filters</span><span class="o">=</span><span class="p">[],</span> <span class="n">aggs_field</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;tags&quot;</span><span class="p">])</span>
+<span class="c1"># search interesting content by tags</span>
+<span class="n">client</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;rss&quot;</span><span class="p">,</span> <span class="s2">&quot;Mobile&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;tags&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="install.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="examples.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, glitter.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

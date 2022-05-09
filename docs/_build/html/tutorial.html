@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial &mdash; glitter-sdk-js  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/tabs.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> glitter-sdk-js
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference external" href="https://glitterprotocol.io/">← glitternetwork</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="libref.html">Library Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">glitter-sdk-js</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Tutorial</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/tutorial.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="tutorial">
+<h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this heading">¶</a></h1>
+<p>This tutorial is intended as an introduction to working with <a class="reference external" href="https://glitterprotocol.io/">glitter</a> and <a class="reference external" href="https://github.com/glitternetwork/glitter-sdk-py">glitter-sdk-py</a>.
+For an introduction on using these utilities, see the <a class="reference internal" href="examples.html#examples"><span class="std std-ref">Examples</span></a>.</p>
+<section id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading">¶</a></h2>
+<p>We begin by creating an object of class GlitterClient:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">glitter</span><span class="o">-</span><span class="n">sdk</span> <span class="kn">import</span> <span class="nn">GlitterClient</span>
+<span class="n">glitter_client</span> <span class="o">=</span> <span class="n">GlitterClient</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Or use your glitter root url</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">glitter</span><span class="o">-</span><span class="n">sdk</span> <span class="kn">import</span> <span class="nn">GlitterClient</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://127.0.0.1:26659&#39;</span>  <span class="c1"># Or Use YOUR Glitter Root URL here</span>
+<span class="n">glitter_client</span> <span class="o">=</span> <span class="n">GlitterClient</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="create-schema">
+<h2>Create Schema<a class="headerlink" href="#create-schema" title="Permalink to this heading">¶</a></h2>
+<p>First, create a schema for documents.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">schema_name</span><span class="o">=</span><span class="s2">&quot;demo&quot;</span>
+<span class="n">fields</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;doi&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;primary&quot;</span><span class="p">:</span> <span class="s2">&quot;true&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;keyword&quot;</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;title&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;ipfs_cid&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;false&quot;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">glitter_client</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">create_schema</span><span class="p">(</span><span class="n">schema_name</span><span class="p">,</span> <span class="n">fields</span><span class="p">)</span>
+<span class="c1"># result like this</span>
+<span class="p">{</span>
+    <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;ok&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;tx&quot;</span><span class="p">:</span> <span class="s2">&quot;B88CEA8172F0B8BD7EAC3021C1B347786F74EDCD9110A7525C61237CD91FCE73&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="put-document-to-glitter">
+<h2>Put Document to Glitter<a class="headerlink" href="#put-document-to-glitter" title="Permalink to this heading">¶</a></h2>
+<p>Then, put a document glitter by glitter-sdk.
+For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">demo_doc</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;doi&quot;</span><span class="p">:</span> <span class="s2">&quot;10.1002/(sci)1099-1697(199803/04)7:2&lt;65::aid-jsc357&gt;3.0.c&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;British Steel Corporation: probably the biggest turnaround story in UK industrial history&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ipfs_cid&quot;</span><span class="p">:</span> <span class="s2">&quot;https://ipfs.io/ipfs/bafybeicoccgasbfx3puk5fxfol6gnbsaj7ssqs5gmhggotpx52p4pb6oze/6dbc6bb3e4993915f5ca07ca854ac31c.pdf&quot;</span>
+<span class="p">}</span>
+<span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">glitter_client</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">put_doc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">schema_name</span><span class="p">,</span> <span class="n">demo_doc</span><span class="p">)</span>
+<span class="c1"># return like this, the tx is transaction id.</span>
+<span class="p">{</span>
+  <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;ok&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;tx&quot;</span><span class="p">:</span> <span class="s2">&quot;49429CDC575C0ED6D021FE9BEE1D44578AC7EDAD61A25EBBF0DE72746E0064F8&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="simple-search">
+<h2>Simple Search<a class="headerlink" href="#simple-search" title="Permalink to this heading">¶</a></h2>
+<p>Now, you can search.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">query_word</span> <span class="o">=</span> <span class="s2">&quot;British Steel Corporation&quot;</span>
+<span class="n">query_field</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">]</span>
+<span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">glitter_client</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">schema_name</span><span class="p">,</span> <span class="n">query_word</span><span class="p">,</span> <span class="n">query_field</span><span class="p">)</span>
+<span class="c1"># the result like:</span>
+<span class="p">{</span>
+    <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;ok&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;tx&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;search_time&quot;</span><span class="p">:</span> <span class="mi">695</span><span class="p">,</span>
+        <span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;demo&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;meta&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;page&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;current_page&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s2">&quot;total_pages&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s2">&quot;total_results&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+                <span class="s2">&quot;sorted_by&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">[{</span>
+            <span class="s2">&quot;highlight&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;&lt;span&gt;British&lt;/span&gt; &lt;span&gt;Steel&lt;/span&gt; &lt;span&gt;Corporation&lt;/span&gt;: probably the biggest turnaround story in UK industrial history&quot;</span><span class="p">]</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;_schema_name&quot;</span><span class="p">:</span> <span class="s2">&quot;demo&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;doi&quot;</span><span class="p">:</span> <span class="s2">&quot;10.1002/(sci)1099-1697(199803/04)7:2&lt;65::aid-jsc357&gt;3.0.c&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;ipfs_cid&quot;</span><span class="p">:</span> <span class="s2">&quot;https://ipfs.io/ipfs/bafybeicoccgasbfx3puk5fxfol6gnbsaj7ssqs5gmhggotpx52p4pb6oze/6dbc6bb3e4993915f5ca07ca854ac31c.pdf&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;British Steel Corporation: probably the biggest turnaround story in UK industrial history&quot;</span>
+            <span class="p">}</span>
+        <span class="p">}],</span>
+        <span class="s2">&quot;facet&quot;</span><span class="p">:</span> <span class="p">{}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, glitter.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
