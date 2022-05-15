@@ -1,3 +1,9 @@
+/* 
+  Copyright GlitterClient GmbH and GlitterClient contributors
+  SPDX-License-Identifier: (Apache-2.0 AND CC-BY-4.0)
+  Code is Apache-2.0 and docs are CC-BY-4.0
+*/
+
 'use strict'
 
 const EventEmitter = require('events')
@@ -9,13 +15,17 @@ const GlitterAdmin = require('./admin')
 const { getServerNode } = require('./utils')
 const httpProtocols = ['http:', 'https:']
 
-class Client extends EventEmitter { 
+/* 
+  A class: driver.GlitterClient is a node client for Glitter. We can
+  use this client to connect, create schema and put & search documents in
+  Glitter.
+*/
+class GlitterClient extends EventEmitter { 
   constructor (uriString) {
     super()
     // parse full-node URI
     if (!uriString) {
       uriString = getServerNode()
-      console.log(uriString)
     }
     let { protocol, hostname, port } = url.parse(uriString)
     // default to http
@@ -35,25 +45,16 @@ class Client extends EventEmitter {
       this.url = `${protocol}//${hostname}:${port}/v1`
       this.call = this.callHttp
     }
+    // class:`~driver.DataBase`: put or search doc from Glitter.
     this.db = new GlitterDb(this.url)
+
+    // class:`~driver.Chain`: Used to query block or transaction info.
     this.chain = new Chain(this.url)
+
+    // class:`~driver.Admin`: Exposes functionalities of the ``'/admin'``
+    endpoint.
     this.admin = new GlitterAdmin(this.url)
   }
-  // callHttp (method, args) {
-  //   return axios({
-  //     url: this.uri + method,
-  //     params: convertHttpArgs(args)
-  //   }).then(function ({ data }) {
-  //     if (data.error) {
-  //       let err = Error(data.error.message)
-  //       Object.assign(err, data.error)
-  //       throw err
-  //     }
-  //     return data.result
-  //   }, function (err) {
-  //     throw Error(err)
-  //   })
-  // }
 }
 
-module.exports = Client
+module.exports = GlitterClient
