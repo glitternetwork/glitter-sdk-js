@@ -49,8 +49,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#show-schema">Show Schema</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#list-all-schema">List All Schema</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#put-document-to-glitter">Put Document to Glitter</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#check-whether-the-document-exists">Check Whether the Document Exists</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#simple-search-without-filter-condition">Simple Search without Filter Condition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#check-existence-of-document">Check Existence of Document</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#search-in-the-schema">Search in the Schema</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#app-status">App Status</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#search-transaction">Search Transaction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#search-block">Search Block</a></li>
@@ -87,25 +87,27 @@
   <section id="examples">
 <span id="id1"></span><h1>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">¶</a></h1>
 <p>For the examples on this page,
-we assume you’ve <a class="reference internal" href="install.html"><span class="doc">installed the glitter sdk Python package</span></a>.</p>
+we assume you’ve <a class="reference internal" href="install.html"><span class="doc">installed the glitter sdk Node package</span></a>.</p>
 <section id="getting-started">
 <h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading">¶</a></h2>
 <p>We begin by creating an object of class GlitterClient:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">glitter_sdk</span> <span class="kn">import</span> <span class="n">GlitterClient</span>
-<span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://127.0.0.1:26659&#39;</span>
-<span class="n">glitter_client</span> <span class="o">=</span> <span class="n">GlitterClient</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">GlitterSdk</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s1">&#39;glitter-sdk-js&#39;</span><span class="p">)</span>
+<span class="n">const</span> <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://127.0.0.1:26659&#39;</span>
+<span class="n">const</span> <span class="n">glitter_client</span> <span class="o">=</span> <span class="n">new</span> <span class="n">GlitterSdk</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Or use the default root url</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">glitter_sdk</span> <span class="kn">import</span> <span class="n">GlitterClient</span>
-<span class="n">glitter_client</span> <span class="o">=</span> <span class="n">GlitterClient</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">GlitterSdk</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s1">&#39;glitter-sdk-js&#39;</span><span class="p">)</span>
+<span class="n">const</span> <span class="n">glitter_client</span> <span class="o">=</span> <span class="n">new</span> <span class="n">GlitterSdk</span><span class="p">()</span>
 </pre></div>
 </div>
 </section>
 <section id="create-schema">
 <h2>Create Schema<a class="headerlink" href="#create-schema" title="Permalink to this heading">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">schema_name</span><span class="o">=</span><span class="s2">&quot;demo&quot;</span>
-<span class="n">fields</span> <span class="o">=</span> <span class="p">[</span>
+<p>We use JSON formatted schema to describe the data stored in Glitter. For more details about the schema syntax,
+please check our developer doc for the <a class="reference external" href="https://docs.glitterprotocol.io/#/development/schema_intro">schema</a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">schema_name</span> <span class="o">=</span> <span class="s2">&quot;demo&quot;</span>
+<span class="n">const</span> <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">{</span>
         <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;doi&quot;</span><span class="p">,</span>
         <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
@@ -129,11 +131,11 @@ we assume you’ve <a class="reference internal" href="install.html"><span class
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">]</span>
-<span class="n">res</span> <span class="o">=</span> <span class="n">glitter_client</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">create_schema</span><span class="p">(</span><span class="n">schema_name</span><span class="p">,</span> <span class="n">fields</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="n">const</span> <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="n">glitter_client</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">create_schema</span><span class="p">(</span><span class="n">schema_name</span><span class="p">,</span> <span class="n">fields</span><span class="p">)</span>
+<span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>if create schema success, the return like:</p>
+<p>If the schema is created successfully, the return would be:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="nt">&quot;code&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
 <span class="w">    </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span><span class="p">,</span><span class="w"></span>
@@ -141,7 +143,7 @@ we assume you’ve <a class="reference internal" href="install.html"><span class
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
-<p>if the schema all ready exist, the return like:</p>
+<p>If the schema already exists, the return would be:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
 <span class="w">  </span><span class="nt">&quot;code&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w"></span>
 <span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;schema already exist: schema_name=demo&quot;</span><span class="p">,</span><span class="w"></span>
@@ -151,8 +153,8 @@ we assume you’ve <a class="reference internal" href="install.html"><span class
 </section>
 <section id="show-schema">
 <h2>Show Schema<a class="headerlink" href="#show-schema" title="Permalink to this heading">¶</a></h2>
-<p>get schema by name.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">glitter_client</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">get_schema</span><span class="p">(</span><span class="s2">&quot;demo&quot;</span><span class="p">)</span>
+<p>Get schema by name.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="n">glitter_client</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">get_schema</span><span class="p">(</span><span class="s2">&quot;demo&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>if success:</p>
@@ -196,7 +198,7 @@ we assume you’ve <a class="reference internal" href="install.html"><span class
 </section>
 <section id="list-all-schema">
 <h2>List All Schema<a class="headerlink" href="#list-all-schema" title="Permalink to this heading">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">glitter_client</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">list_schema</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="n">glitter_client</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">list_schema</span><span class="p">()</span>
 <span class="c1"># return</span>
 <span class="p">{</span>
     <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
@@ -233,17 +235,17 @@ we assume you’ve <a class="reference internal" href="install.html"><span class
 </section>
 <section id="put-document-to-glitter">
 <h2>Put Document to Glitter<a class="headerlink" href="#put-document-to-glitter" title="Permalink to this heading">¶</a></h2>
-<p>define a document and put it to glitter
+<p>Define a document and put it to glitter
 For example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">demo_doc</span> <span class="o">=</span> <span class="p">{</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">demo_doc</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;doi&quot;</span><span class="p">:</span> <span class="s2">&quot;10.1002/(sci)1099-1697(199803/04)7:2&lt;65::aid-jsc357&gt;3.0.c&quot;</span><span class="p">,</span>
     <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;British Steel Corporation: probably the biggest turnaround story in UK industrial history&quot;</span><span class="p">,</span>
     <span class="s2">&quot;ipfs_cid&quot;</span><span class="p">:</span> <span class="s2">&quot;bafybeibxvp6bawmr4u24vuza2vyretip4n7sfvivg7hdbyolxrvbodwlte&quot;</span>
 <span class="p">}</span>
-<span class="n">res</span> <span class="o">=</span> <span class="n">glitter_client</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">put_doc</span><span class="p">(</span><span class="n">schema_name</span><span class="p">,</span> <span class="n">demo_doc</span><span class="p">)</span>
+<span class="n">const</span> <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="n">glitter_client</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">put_doc</span><span class="p">(</span><span class="n">schema_name</span><span class="p">,</span> <span class="n">demo_doc</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>if put_doc success, the return like:</p>
+<p>If doc is put into Glitter Protocol successfully, the return would be:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
 <span class="w">  </span><span class="nt">&quot;code&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
 <span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span><span class="p">,</span><span class="w"></span>
@@ -251,7 +253,7 @@ For example:</p>
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
-<p>if fails, the return may be like:</p>
+<p>Otherwise, the return may be like:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
 <span class="w">  </span><span class="nt">&quot;code&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w"></span>
 <span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;RPC error -32603 - Internal error: tx already exists in cache&quot;</span><span class="p">,</span><span class="w"></span>
@@ -259,26 +261,26 @@ For example:</p>
 </pre></div>
 </div>
 </section>
-<section id="check-whether-the-document-exists">
-<h2>Check Whether the Document Exists<a class="headerlink" href="#check-whether-the-document-exists" title="Permalink to this heading">¶</a></h2>
-<p>Query by primary key of document,for example:doi.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">schema_name</span> <span class="o">=</span> <span class="s2">&quot;demo&quot;</span>
-<span class="n">doi</span> <span class="o">=</span> <span class="s2">&quot;10.1002/(sci)1099-1697(199803/04)7:2&lt;65::aid-jsc357&gt;3.0.c&quot;</span>
-<span class="n">res</span> <span class="o">=</span> <span class="n">glitter_client</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">get_docs</span><span class="p">(</span><span class="n">schema_name</span><span class="p">,</span> <span class="p">[</span><span class="n">doi</span><span class="p">])</span>
+<section id="check-existence-of-document">
+<h2>Check Existence of Document<a class="headerlink" href="#check-existence-of-document" title="Permalink to this heading">¶</a></h2>
+<p>Query by primary key of the document.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">schema_name</span> <span class="o">=</span> <span class="s2">&quot;demo&quot;</span>
+<span class="n">const</span> <span class="n">doi</span> <span class="o">=</span> <span class="s2">&quot;10.1002/(sci)1099-1697(199803/04)7:2&lt;65::aid-jsc357&gt;3.0.c&quot;</span>
+<span class="n">const</span> <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="n">glitter_client</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">get_docs</span><span class="p">(</span><span class="n">schema_name</span><span class="p">,</span> <span class="p">[</span><span class="n">user_id</span><span class="p">])</span>
 </pre></div>
 </div>
-<p>return the document:</p>
+<p>We will have a document return as below:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="nt">&quot;code&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"></span>
 <span class="w">    </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span><span class="p">,</span><span class="w"></span>
 <span class="w">    </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">        </span><span class="nt">&quot;total&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
 <span class="w">        </span><span class="nt">&quot;hits&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">            </span><span class="nt">&quot;10.1002/(sci)1099-1697(199803/04)7:2&lt;65::aid-jsc357&gt;3.0.c&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">            </span><span class="nt">&quot;123&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">                </span><span class="nt">&quot;_schema_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;demo&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">                </span><span class="nt">&quot;doi&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;10.1002/(sci)1099-1697(199803/04)7:2&lt;65::aid-jsc357&gt;3.0.c&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">                </span><span class="nt">&quot;ipfs_cid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;bafybeibxvp6bawmr4u24vuza2vyretip4n7sfvivg7hdbyolxrvbodwlte&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">                </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;British Steel Corporation: probably the biggest turnaround story in UK industrial history&quot;</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;user_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;123&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;user_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Bob&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;email_address&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Bob@gmail.com&quot;</span><span class="w"></span>
 <span class="w">            </span><span class="p">}</span><span class="w"></span>
 <span class="w">        </span><span class="p">}</span><span class="w"></span>
 <span class="w">    </span><span class="p">}</span><span class="w"></span>
@@ -286,12 +288,12 @@ For example:</p>
 </pre></div>
 </div>
 </section>
-<section id="simple-search-without-filter-condition">
-<h2>Simple Search without Filter Condition<a class="headerlink" href="#simple-search-without-filter-condition" title="Permalink to this heading">¶</a></h2>
+<section id="search-in-the-schema">
+<h2>Search in the Schema<a class="headerlink" href="#search-in-the-schema" title="Permalink to this heading">¶</a></h2>
 <p>The search is the standard query for performing a full-text search, including options for fuzzy matching.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">query_word</span> <span class="o">=</span> <span class="s2">&quot;British Steel Corporation&quot;</span>
-<span class="n">query_field</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">]</span>
-<span class="n">res</span> <span class="o">=</span> <span class="n">glitter_client</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">schema_name</span><span class="p">,</span> <span class="n">query_word</span><span class="p">,</span> <span class="n">query_field</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">query_word</span> <span class="o">=</span> <span class="s2">&quot;Bob&quot;</span>
+<span class="n">const</span> <span class="n">query_field</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;user_name&quot;</span><span class="p">]</span>
+<span class="n">const</span> <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="n">glitter_client</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">schema_name</span><span class="p">,</span> <span class="n">query_word</span><span class="p">,</span> <span class="n">query_field</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>the hit result like:</p>
@@ -312,13 +314,13 @@ For example:</p>
 <span class="w">        </span><span class="p">},</span><span class="w"></span>
 <span class="w">        </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w"></span>
 <span class="w">            </span><span class="nt">&quot;highlight&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">                </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;&lt;span&gt;British&lt;/span&gt; &lt;span&gt;Steel&lt;/span&gt; &lt;span&gt;Corporation&lt;/span&gt;: probably the biggest turnaround story in UK industrial history&quot;</span><span class="p">]</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;&lt;span&gt;Bob&lt;/span&gt;&quot;</span><span class="p">]</span><span class="w"></span>
 <span class="w">            </span><span class="p">},</span><span class="w"></span>
 <span class="w">            </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">                </span><span class="nt">&quot;_schema_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;demo&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">                </span><span class="nt">&quot;doi&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;10.1002/(sci)1099-1697(199803/04)7:2&lt;65::aid-jsc357&gt;3.0.c&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">                </span><span class="nt">&quot;ipfs_cid&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;bafybeibxvp6bawmr4u24vuza2vyretip4n7sfvivg7hdbyolxrvbodwlte&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">                </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;British Steel Corporation: probably the biggest turnaround story in UK industrial history&quot;</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;user_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;123&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;user_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Bob&quot;</span><span class="p">,</span><span class="w"></span>
+<span class="w">                </span><span class="nt">&quot;email_address&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Bob@gmail.com&quot;</span><span class="w"></span>
 <span class="w">            </span><span class="p">}</span><span class="w"></span>
 <span class="w">        </span><span class="p">}],</span><span class="w"></span>
 <span class="w">        </span><span class="nt">&quot;facet&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w"></span>
@@ -329,7 +331,7 @@ For example:</p>
 </section>
 <section id="app-status">
 <h2>App Status<a class="headerlink" href="#app-status" title="Permalink to this heading">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">glitter_client</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">app_status</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="n">glitter_client</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">app_status</span><span class="p">()</span>
 <span class="c1">#</span>
 <span class="p">{</span>
     <span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
@@ -352,11 +354,11 @@ For example:</p>
 </section>
 <section id="search-transaction">
 <h2>Search Transaction<a class="headerlink" href="#search-transaction" title="Permalink to this heading">¶</a></h2>
-<p>You can search transaction by transaction height, transaction hash.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># search by transaction hash.</span>
-<span class="n">res</span> <span class="o">=</span> <span class="n">glitter_client</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">tx_search</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s2">&quot;tx.hash=&#39;ACB6696C22B601D544FE05C8899090B4C1E98EF87636AA07EBCD63548786B561&#39;&quot;</span><span class="p">)</span>
+<p>You can also search transaction by transaction height and transaction hash.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># search by transaction hash.</span>
+<span class="n">const</span> <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="n">glitter_client</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">tx_search</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s2">&quot;tx.hash=&#39;ACB6696C22B601D544FE05C8899090B4C1E98EF87636AA07EBCD63548786B561&#39;&quot;</span><span class="p">)</span>
 <span class="c1"># search by transaction height.</span>
-<span class="n">res</span> <span class="o">=</span> <span class="n">glitter_client</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">tx_search</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s2">&quot;tx.height=460844&quot;</span><span class="p">)</span>
+<span class="n">const</span> <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="n">glitter_client</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">tx_search</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s2">&quot;tx.height=460844&quot;</span><span class="p">)</span>
 <span class="c1"># the return like:</span>
 <span class="p">{</span>
   <span class="s2">&quot;jsonrpc&quot;</span><span class="p">:</span> <span class="s2">&quot;2.0&quot;</span><span class="p">,</span>
@@ -410,9 +412,9 @@ For example:</p>
 <section id="search-block">
 <h2>Search Block<a class="headerlink" href="#search-block" title="Permalink to this heading">¶</a></h2>
 <p>You can search block by block_search  or fetch the latest block.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">glitter_client</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">block</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="n">glitter_client</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">block</span><span class="p">()</span>
 <span class="c1"># or</span>
-<span class="n">res</span> <span class="o">=</span> <span class="n">glitter_client</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">block_search</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s2">&quot;block.height = 17835&quot;</span><span class="p">)</span>
+<span class="n">const</span> <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="n">glitter_client</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">block_search</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s2">&quot;block.height = 17835&quot;</span><span class="p">)</span>
 <span class="c1"># the return like:</span>
 <span class="p">{</span>
      <span class="s2">&quot;jsonrpc&quot;</span><span class="p">:</span> <span class="s2">&quot;2.0&quot;</span><span class="p">,</span>
@@ -506,7 +508,7 @@ For example:</p>
 <section id="fetch-validator-status">
 <h2>Fetch Validator Status<a class="headerlink" href="#fetch-validator-status" title="Permalink to this heading">¶</a></h2>
 <p>Get validator set at a specified height</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">glitter_client</span><span class="o">.</span><span class="n">admin</span><span class="o">.</span><span class="n">validators</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="n">glitter_client</span><span class="o">.</span><span class="n">admin</span><span class="o">.</span><span class="n">validators</span><span class="p">()</span>
 <span class="c1"># the return like:</span>
 <span class="p">{</span>
   <span class="s2">&quot;jsonrpc&quot;</span><span class="p">:</span> <span class="s2">&quot;2.0&quot;</span><span class="p">,</span>
@@ -567,7 +569,7 @@ For example:</p>
 </pre></div>
 </div>
 <p>If no height is provided, it will fetch validator set which corresponds to the latest block.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">glitter_client</span><span class="o">.</span><span class="n">admin</span><span class="o">.</span><span class="n">validators</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="mi">100000</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">const</span> <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="n">glitter_client</span><span class="o">.</span><span class="n">admin</span><span class="o">.</span><span class="n">validators</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="mi">100000</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>

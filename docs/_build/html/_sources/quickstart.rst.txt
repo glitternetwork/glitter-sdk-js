@@ -10,7 +10,7 @@ Simple introduction to glitter.
 ---------------
 Connect Glitter network using glitter_js package.
 
-.. code-block:: python
+.. code-block::
 
      const GlitterSdk = require('glitter-sdk-js')
      const client = new GlitterSdk()
@@ -24,7 +24,7 @@ After creation success, you will be able to check the detail of schema info `her
 
     .. tab:: Code
 
-        .. code-block:: python
+        .. code-block::
 
             # create schema with a url and title
             const schema = [
@@ -44,7 +44,7 @@ After creation success, you will be able to check the detail of schema info `her
                     }
                 }
             ]
-            const res = client.db.create_schema("sample", schema)
+            const res = await client.db.create_schema("sample", schema)
             # get the schema you create
             const client.db.get_schema("sample")
 
@@ -88,7 +88,7 @@ Once the put_doc success, you will be able to see the details of tx `here <http:
 
     .. tab:: Code
 
-        .. code-block:: python
+        .. code-block::
 
             const put_res = client.db.put_doc("sample", {
                     "url": "https://glitterprotocol.io/",
@@ -97,7 +97,7 @@ Once the put_doc success, you will be able to see the details of tx `here <http:
 
     .. tab:: Output
 
-        .. code-block:: python
+        .. code-block::
 
             {
               "code": 0,
@@ -113,14 +113,14 @@ Performing a full-text search.
 
     .. tab:: Code
 
-        .. code-block:: python
+        .. code-block::
 
             # search doc
-            const search_res = client.db.search("sample", "Content Indexing Network")
+            const search_res = await client.db.search("sample", "Content Indexing Network")
 
     .. tab:: Output
 
-        .. code-block:: python
+        .. code-block::
 
             {
                 "code": 0,
@@ -157,7 +157,7 @@ Performing a full-text search.
 ------------------------
 Below is an example for searching rss data.
 
-.. code-block:: python
+.. code-block::
 
     # standard query for performing a full-text search
     client.db.search("rss", "oppo")

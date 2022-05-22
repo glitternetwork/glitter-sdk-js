@@ -13,7 +13,7 @@ Getting Started
 
 We begin by creating an object of class GlitterClient:
 
-.. code-block:: python
+.. code-block::
 
     const GlitterSdk = require('glitter-sdk-js')
     const url = 'http://127.0.0.1:26659'
@@ -21,7 +21,7 @@ We begin by creating an object of class GlitterClient:
 
 Or use the default root url
 
-.. code-block:: python
+.. code-block::
 
     const GlitterSdk = require('glitter-sdk-js')
     const glitter_client = new GlitterSdk()
@@ -30,7 +30,10 @@ Or use the default root url
 Create Schema
 ------------------------
 
-.. code-block:: python
+We use JSON formatted schema to describe the data stored in Glitter. For more details about the schema syntax,
+please check our developer doc for the `schema <https://docs.glitterprotocol.io/#/development/schema_intro>`__.
+
+.. code-block::
 
     const schema_name = "demo"
     const fields = [
@@ -60,7 +63,7 @@ Create Schema
     const res = await glitter_client.db.create_schema(schema_name, fields)
     console.log(res)
 
-if create schema success, the return like:
+If the schema is created successfully, the return would be:
 
 .. code-block:: json
 
@@ -70,7 +73,7 @@ if create schema success, the return like:
         "tx": "B88CEA8172F0B8BD7EAC3021C1B347786F74EDCD9110A7525C61237CD91FCE73",
     }
 
-if the schema all ready exist, the return like:
+If the schema already exists, the return would be:
 
 .. code-block:: json
 
@@ -82,9 +85,9 @@ if the schema all ready exist, the return like:
 Show Schema
 ------------------------
 
-get schema by name.
+Get schema by name.
 
-.. code-block:: python
+.. code-block::
 
     const res = await glitter_client.db.get_schema("demo")
 
@@ -133,7 +136,7 @@ otherwise:
 List All Schema
 ------------------------
 
-.. code-block:: python
+.. code-block::
 
     const res = await glitter_client.db.list_schema()
     # return
@@ -171,10 +174,10 @@ List All Schema
 
 Put Document to Glitter
 --------------------------------
-define a document and put it to glitter
+Define a document and put it to glitter
 For example:
 
-.. code-block:: python
+.. code-block::
 
     const demo_doc = {
         "doi": "10.1002/(sci)1099-1697(199803/04)7:2<65::aid-jsc357>3.0.c",
@@ -183,7 +186,7 @@ For example:
     }
     const res = await glitter_client.db.put_doc(schema_name, demo_doc)
 
-if put_doc success, the return like:
+If doc is put into Glitter Protocol successfully, the return would be:
 
 .. code-block:: json
 
@@ -194,7 +197,7 @@ if put_doc success, the return like:
     }
 
 
-if fails, the return may be like:
+Otherwise, the return may be like:
 
 .. code-block:: json
 
@@ -204,17 +207,17 @@ if fails, the return may be like:
     }
 
 
-Check Whether the Document Exists
+Check Existence of Document
 -----------------------------------
-Query by primary key of document,for example:doi.
+Query by primary key of the document.
 
-.. code-block:: python
+.. code-block::
 
     const schema_name = "demo"
     const doi = "10.1002/(sci)1099-1697(199803/04)7:2<65::aid-jsc357>3.0.c"
-    const res = await glitter_client.db.get_docs(schema_name, [doi])
+    const res = await glitter_client.db.get_docs(schema_name, [user_id])
 
-return the document:
+We will have a document return as below:
 
 .. code-block:: json
 
@@ -224,25 +227,25 @@ return the document:
         "data": {
             "total": 1,
             "hits": {
-                "10.1002/(sci)1099-1697(199803/04)7:2<65::aid-jsc357>3.0.c": {
+                "123": {
                     "_schema_name": "demo",
-                    "doi": "10.1002/(sci)1099-1697(199803/04)7:2<65::aid-jsc357>3.0.c",
-                    "ipfs_cid": "bafybeibxvp6bawmr4u24vuza2vyretip4n7sfvivg7hdbyolxrvbodwlte",
-                    "title": "British Steel Corporation: probably the biggest turnaround story in UK industrial history"
+                    "user_id": "123",
+                    "user_name": "Bob",
+                    "email_address": "Bob@gmail.com"
                 }
             }
         }
     }
 
 
-Simple Search without Filter Condition
+Search in the Schema
 -------------------------------------------------
 The search is the standard query for performing a full-text search, including options for fuzzy matching.
 
-.. code-block:: python
+.. code-block::
 
-    const query_word = "British Steel Corporation"
-    const query_field = ["title"]
+    const query_word = "Bob"
+    const query_field = ["user_name"]
     const res = await glitter_client.db.search(schema_name, query_word, query_field)
 
 the hit result like:
@@ -266,13 +269,13 @@ the hit result like:
             },
             "items": [{
                 "highlight": {
-                    "title": ["<span>British</span> <span>Steel</span> <span>Corporation</span>: probably the biggest turnaround story in UK industrial history"]
+                    "title": ["<span>Bob</span>"]
                 },
                 "data": {
                     "_schema_name": "demo",
-                    "doi": "10.1002/(sci)1099-1697(199803/04)7:2<65::aid-jsc357>3.0.c",
-                    "ipfs_cid": "bafybeibxvp6bawmr4u24vuza2vyretip4n7sfvivg7hdbyolxrvbodwlte",
-                    "title": "British Steel Corporation: probably the biggest turnaround story in UK industrial history"
+                    "user_id": "123",
+                    "user_name": "Bob",
+                    "email_address": "Bob@gmail.com"
                 }
             }],
             "facet": {}
@@ -283,7 +286,7 @@ the hit result like:
 App Status
 ----------------------------
 
-.. code-block:: python
+.. code-block::
 
     const res = await glitter_client.db.app_status()
     #
@@ -306,9 +309,9 @@ App Status
 
 Search Transaction
 ----------------------------
-You can search transaction by transaction height, transaction hash.
+You can also search transaction by transaction height and transaction hash.
 
-.. code-block:: python
+.. code-block::
 
    # search by transaction hash.
    const res = await glitter_client.chain.tx_search(query="tx.hash='ACB6696C22B601D544FE05C8899090B4C1E98EF87636AA07EBCD63548786B561'")
@@ -366,7 +369,7 @@ Search Block
 --------------
 You can search block by block_search  or fetch the latest block.
 
-.. code-block:: python
+.. code-block::
 
    const res = await glitter_client.chain.block()
    # or
@@ -464,7 +467,7 @@ Fetch Validator Status
 ----------------------------
 Get validator set at a specified height
 
-.. code-block:: python
+.. code-block::
 
    const res = await glitter_client.admin.validators()
    # the return like:
@@ -527,7 +530,7 @@ Get validator set at a specified height
 
 If no height is provided, it will fetch validator set which corresponds to the latest block.
 
-.. code-block:: python
+.. code-block::
 
    const res = await glitter_client.admin.validators(height=100000)
 
