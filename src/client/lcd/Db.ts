@@ -266,7 +266,7 @@ export class Db {
     const whr = Object.keys(where).map(key => {
       const value =
         typeof where[key] === 'string' ? `'${where[key]}'` : where[key];
-      return `${key}${value}`;
+      return `${key}=${value}`;
     });
     if (where) {
       sql += `where ${whr.join(' AND ')}`;
