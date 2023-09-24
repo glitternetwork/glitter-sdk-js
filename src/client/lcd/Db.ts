@@ -262,7 +262,7 @@ export class Db {
       throw new Error('too much will to delete');
     }
 
-    let sql = `DELETE FROM ${database}.${table} .`;
+    let sql = `DELETE FROM ${database}.${table} `;
     const whr = Object.keys(where).map(key => {
       const value =
         typeof where[key] === 'string' ? `'${where[key]}'` : where[key];

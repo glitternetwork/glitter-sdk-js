@@ -1,6 +1,6 @@
 {
   "name": "@glitterprotocol/glitter-sdk",
-  "version": "1.0.10",
+  "version": "1.0.12",
   "description": "The JavaScript SDK for Glitter",
   "license": "MIT",
   "author": "Glitter Team",
