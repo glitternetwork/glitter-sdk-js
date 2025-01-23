@@ -2,6 +2,7 @@ import { APIRequester } from '../client/lcd/APIRequester';
 import { SQLQueryRequest } from '@glitterprotocol/glitter.proto/index/query';
 import SqlString from 'sqlstring';
 import { AxiosRequestHeaders } from 'axios';
+import { getContractQueryResult } from '../util/contract';
 
 export interface SearcherConfig {
   /**
@@ -26,14 +27,20 @@ export class Searcher {
   public async query(
     sqlTemplate: string,
     keyWords?: string[],
-    source?: string
+    source?: string,
+    signal?: any
   ) {
+    console.log(signal, 'sdk signal');
     const endpoint = `/blockved/glitterchain/index/sql/simple_query`;
     const sql = keyWords
       ? SqlString.format(sqlTemplate, keyWords)
       : sqlTemplate;
     const req = SQLQueryRequest.fromPartial({ sql });
-    const r = this.apiRequester.post(endpoint, req, source);
-    return r;
+    const r = this.apiRequester.post(endpoint, req, source, signal);
+    return await r.then((r: any) => {
+      const { result = [] } = r || {};
+      const rawRow: any = getContractQueryResult(result);
+      return { result: rawRow };
+    });
   }
 }

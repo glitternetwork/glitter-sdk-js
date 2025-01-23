@@ -1,11 +1,13 @@
 import { Numeric, Coins } from '../index';
 
-export const chainId = 'glitter_12000-2';
-export const url = 'https://api.xian.glitter.link';
+export const chainId = 'glitter_12000-4';
+// export const url = 'http://sg5.testnet.glitter.link:41317';
+// export const url = 'http://sg5.testnet.glitter.link:46657';
+export const url = 'https://orlando-api.glitterprotocol.tech';
 export const mnemonicKey =
-  'lesson police usual earth embrace someone opera season urban produce jealous canyon shrug usage subject cigar imitate hollow route inhale vocal special sun fuel';
-export const dbName = 'database_test';
-export const bookTableName = 'book_v3';
+  'gym panther aware panda result lumber label boring uniform gossip monitor talent direct point provide swim fly unaware clip fossil predict olympic frozen artist';
+export const dbName = 'trna';
+export const bookTableName = 'news_v1';
 export const userTableName = 'user_v3';
 
 // For non-string literals like Coins and Numeric, the type annotations remain.

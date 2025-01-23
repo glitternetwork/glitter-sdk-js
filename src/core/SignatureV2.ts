@@ -7,7 +7,7 @@ import {
   signModeToJSON,
 } from '@glitterprotocol/glitter.proto/cosmos/tx/signing/v1beta1/signing';
 import { MultiSignature } from '@glitterprotocol/glitter.proto/cosmos/crypto/multisig/v1beta1/multisig';
-
+import { Buffer } from 'buffer';
 export { SignMode } from '@glitterprotocol/glitter.proto/cosmos/tx/signing/v1beta1/signing';
 
 export class SignatureV2 {

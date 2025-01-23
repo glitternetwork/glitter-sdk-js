@@ -22,6 +22,7 @@ import { CompactBitArray } from './CompactBitArray';
 import { Msg } from './Msg';
 import { Fee } from './Fee';
 import * as Long from 'long';
+import { Buffer } from 'buffer';
 import { SignatureV2 } from './SignatureV2';
 import { SignerData } from '../client/lcd/api/TxAPI';
 

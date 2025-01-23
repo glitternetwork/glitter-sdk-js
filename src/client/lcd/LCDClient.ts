@@ -4,6 +4,7 @@ import { Db } from './Db';
 import { Numeric } from '../../core/numeric';
 import { Coins } from '../../core/Coins';
 import { Key } from '../../key';
+import { DatasetAPI } from './api/DatasetAPI';
 
 export interface LCDClientConfig {
   /**
@@ -74,6 +75,7 @@ export class LCDClient {
   // API access
   public auth: AuthAPI;
   public bank: BankAPI;
+  public dataset: DatasetAPI;
   // public distribution: DistributionAPI;
   // public feeGrant: FeeGrantAPI;
   // public gov: GovAPI;
@@ -113,6 +115,7 @@ export class LCDClient {
     // instantiate APIs
     this.auth = new AuthAPI(this);
     this.bank = new BankAPI(this);
+    this.dataset = new DatasetAPI(this);
     // this.distribution = new DistributionAPI(this);
     // this.feeGrant = new FeeGrantAPI(this);
     // this.gov = new GovAPI(this);

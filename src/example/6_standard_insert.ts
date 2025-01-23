@@ -29,6 +29,7 @@ export async function insert() {
   const rows = [
     {
       _id: 'mirror_0xbDc4199575A5FA3F19e9888C5d51Bde798F404Cc1',
+      _tx_id: '',
       author: '0xbDc4199575A5FA3F19e9888C5d51Bde798F404Cc',
       avatar_url:
         'https://mirror-media.imgix.net/publication-images/fB3kzXkesQJbPVhKlTc86.png?h=592&w=592',
@@ -71,4 +72,14 @@ export async function insert() {
     where
   );
   console.log(updateResult);
+
+  const deleteResult = await dbClient.delete(
+    dbName,
+    userTableName,
+    where,
+    'status',
+    true,
+    10
+  );
+  console.log(deleteResult);
 }

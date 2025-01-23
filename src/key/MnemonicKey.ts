@@ -3,6 +3,7 @@
 import * as bip39 from 'bip39';
 import { RawKey } from './RawKey';
 import { HDNode } from '@ethersproject/hdnode';
+import { Buffer } from 'buffer';
 
 export const GLITTER_COIN_TYPE = 60;
 

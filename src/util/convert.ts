@@ -2,6 +2,11 @@ import { JSONSerializable } from './json';
 import { Dec, Numeric } from '../core/numeric';
 import { bech32 } from 'bech32';
 import { Keccak } from 'sha3';
+import { EthSimplePublicKey } from '../core/PublicKey';
+import { ecdsaRecover } from 'secp256k1';
+import { keccak256 } from '@ethersproject/keccak256';
+import { Buffer } from 'buffer';
+
 import {
   Argument,
   Argument_VarType,
@@ -152,3 +157,125 @@ export const toGlitterArguments = (
 
   return result;
 };
+
+export function buildBatchInsertStatement(
+  database: string,
+  table: string,
+  columns: string[],
+  rowValues: (string | number | boolean)[][]
+): { sql: string; values: Argument[] } {
+  const sql = `INSERT INTO ${database}.${table} (${columns.join(',')}) VALUES`;
+  const repeat = columns.length - 1;
+  const placeholder = ` (?,${Array(repeat).fill('?').join(',')})`;
+  const placeholders =
+    placeholder +
+    Array(rowValues.length - 1)
+      .fill(',' + placeholder)
+      .join('');
+  const fullSql = sql + placeholders;
+
+  const values: Argument[] = [];
+  for (const row of rowValues) {
+    console.log('🚀 ~ file: Db.ts:214 ~ Db ~ vals:', row.length);
+    console.log('🚀 ~ file: Db.ts:214 ~ Db ~ columns:', columns.length);
+    if (row.length !== columns.length) {
+      throw new Error('length of value is not correct');
+    }
+    const rowArgs = toGlitterArguments(row);
+    values.push(...rowArgs);
+  }
+
+  return { sql: fullSql, values };
+}
+
+export function buildUpdateStatement(
+  database: string,
+  table: string,
+  columns: Record<string, any> | null,
+  whereEqual: Record<string, any> | null
+): { sql: string; values: Argument[] } {
+  let updateSql = `UPDATE ${database}.${table} SET `;
+  let whereSql = ' WHERE ';
+  const condVals: any[] = [];
+
+  if (columns) {
+    const setClauses: string[] = [];
+    for (const colName in columns) {
+      if (Object.prototype.hasOwnProperty.call(columns, colName)) {
+        setClauses.push(`${colName} = ?`);
+        condVals.push(columns[colName]);
+      }
+    }
+    updateSql += setClauses.join(', ');
+  } else {
+    throw new Error('No columns provided for update.');
+  }
+
+  if (whereEqual) {
+    const whereClauses: string[] = [];
+    for (const colName in whereEqual) {
+      if (Object.prototype.hasOwnProperty.call(whereEqual, colName)) {
+        whereClauses.push(`${colName} = ?`);
+        condVals.push(whereEqual[colName]);
+      }
+    }
+    whereSql += whereClauses.join(' AND');
+  } else {
+    throw new Error('No WHERE conditions provided for update.');
+  }
+
+  const sql = updateSql + whereSql;
+  const values = toGlitterArguments(condVals);
+
+  return { sql, values };
+}
+
+export function buildDeleteStatement(
+  database: string,
+  table: string,
+  where: Record<string, any>,
+  orderBy?: string,
+  asc?: boolean,
+  limit?: number
+): { sql: string; values: Argument[] } {
+  const whereCond: string[] = [];
+  const condVals: any[] = [];
+
+  if (where) {
+    for (const colName in where) {
+      if (Object.prototype.hasOwnProperty.call(where, colName)) {
+        whereCond.push(`${colName} = ?`);
+        condVals.push(where[colName]);
+      }
+    }
+  }
+
+  let sql = `DELETE FROM ${database}.${table} WHERE ${whereCond.join(' AND ')}`;
+
+  if (orderBy) {
+    sql += ` ORDER BY ${orderBy} ${asc ? 'ASC' : 'DESC'}`;
+  }
+
+  if (limit && limit > 0) {
+    sql += ` LIMIT ${limit}`;
+  }
+  const values = toGlitterArguments(condVals);
+
+  return { sql, values };
+}
+
+export function verifySign(
+  addr: string,
+  msg: string,
+  signHex: string
+): boolean {
+  const recPubkey = ecdsaRecover(
+    Uint8Array.from(Buffer.from(signHex, 'hex')),
+    1,
+    Uint8Array.from(Buffer.from(keccak256(Buffer.from(msg)).slice(2), 'hex'))
+  );
+  const recAddr = new EthSimplePublicKey(
+    Buffer.from(recPubkey).toString('base64')
+  ).address();
+  return recAddr.toLowerCase() == addr.toLowerCase();
+}

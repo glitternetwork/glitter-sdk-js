@@ -33,8 +33,9 @@ export async function search() {
 
   const dbClient = client.db(key);
   console.log('=====query all:');
-  const allRst = await dbClient.query(
-    `select * from ${dbName}.${bookTableName} limit 10`
+  const allRst = await dbClient.queryV2(
+    `select * from ${dbName}.${bookTableName} limit 10`,
+    dbName
   );
   console.log(allRst);
 
@@ -50,7 +51,7 @@ export async function search() {
   const queryStr = queryStringPrepare(queries);
   const highlight = highlightPrepare(['author', 'title']);
   const sql1 = `select ${highlight} _score, * from ${dbName}.${bookTableName} where query_string(?) limit 0,10`;
-  const rst2 = await dbClient.query(sql1, [queryStr]);
+  const rst2 = await dbClient.queryV2(sql1, dbName, [queryStr]);
   console.log(rst2);
 
   console.log('=====match phrase query:');
@@ -60,6 +61,6 @@ export async function search() {
   const highlightPhrase = highlightPrepare(['title']);
   const sql = `select ${highlightPhrase} _score, * from ${dbName}.${bookTableName} where query_string(?) limit 0,10`;
   const sql2 = prepareSQL(sql, queryStrPhrase);
-  const rst3 = await dbClient.query(sql2);
+  const rst3 = await dbClient.queryV2(sql2, dbName);
   console.log(rst3);
 }

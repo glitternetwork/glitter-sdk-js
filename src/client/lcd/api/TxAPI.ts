@@ -15,6 +15,7 @@ import { hashToHex } from '../../../util/hash';
 import { LCDClient } from '../LCDClient';
 import { TxLog } from '../../../core';
 import { APIParams, Pagination, PaginationOptions } from '../APIRequester';
+import { Buffer } from 'buffer';
 import { BroadcastMode as BroadcastModeV1 } from '@glitterprotocol/glitter.proto/cosmos/tx/v1beta1/service';
 import { BroadcastMode as BroadcastModeV2 } from '@glitterprotocol/glitter.proto/cosmos/tx/v1beta1/service';
 

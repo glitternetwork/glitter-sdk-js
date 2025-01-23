@@ -5,6 +5,7 @@ import {
   SQLExecRequest as SQLExecRequest_pb,
   SQLExecRequest,
 } from '@glitterprotocol/glitter.proto/index/tx';
+import { Argument } from '@glitterprotocol/glitter.proto/index/sql_engine';
 import { AccAddress } from '../bech32';
 /**
  * Executes a market swap between 2 denominations at the exchange rate registered by the
@@ -19,39 +20,43 @@ export class SQLMsg extends JSONSerializable<
   /**
    * @param value SQLExecRequest
    */
-  constructor(public uid: AccAddress, public sql: string) {
+  constructor(
+    public uid: AccAddress,
+    public sql: string,
+    public args?: Argument[]
+  ) {
     super();
   }
 
   public static fromAmino(data: SQLMsg.Amino, _?: boolean): SQLMsg {
     const {
-      value: { uid, sql },
+      value: { uid, sql, arguments: args },
     } = data;
-    return new SQLMsg(uid, sql);
+    return new SQLMsg(uid, sql, args);
   }
 
   public toAmino(_?: boolean): SQLMsg.Amino {
-    const { uid, sql } = this;
+    const { uid, sql, args } = this;
     return {
       type: 'sql/SQLMsg',
       value: {
         uid,
         sql,
-        arguments: [],
+        arguments: args || [],
       },
     };
   }
 
   public static fromProto(proto: SQLMsg.Proto, _?: boolean): SQLMsg {
-    return new SQLMsg(proto.uid, proto.sql);
+    return new SQLMsg(proto.uid, proto.sql, proto.arguments);
   }
 
   public toProto(_?: boolean): SQLMsg.Proto {
-    const { uid, sql } = this;
+    const { uid, sql, args } = this;
     return SQLExecRequest_pb.fromPartial({
       uid,
       sql,
-      arguments: [],
+      arguments: args || [],
     });
   }
 
@@ -67,17 +72,17 @@ export class SQLMsg extends JSONSerializable<
   }
 
   public static fromData(data: SQLMsg.Data, _?: boolean): SQLMsg {
-    const { uid, sql } = data;
-    return new SQLMsg(uid, sql);
+    const { uid, sql, arguments: args } = data;
+    return new SQLMsg(uid, sql, args);
   }
 
   public toData(_?: boolean): SQLMsg.Data {
-    const { uid, sql } = this;
+    const { uid, sql, args } = this;
     return {
       '@type': '/blockved.glitterchain.index.SQLExecRequest',
       uid,
       sql,
-      arguments: [],
+      arguments: args || [],
     };
   }
 }
@@ -88,7 +93,7 @@ export namespace SQLMsg {
     value: {
       uid: AccAddress;
       sql: string;
-      arguments: string[];
+      arguments: Argument[];
     };
   }
 
@@ -96,7 +101,7 @@ export namespace SQLMsg {
     '@type': '/blockved.glitterchain.index.SQLExecRequest';
     uid: AccAddress;
     sql: string;
-    arguments: string[];
+    arguments: Argument[];
   }
 
   export type Proto = SQLExecRequest_pb;

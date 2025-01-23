@@ -77,10 +77,21 @@ export class APIRequester {
   public async post<T>(
     endpoint: string,
     data?: any,
-    source?: string
+    source?: string,
+    signal?: any
   ): Promise<T> {
     const url =
       this.computeEndpoint(endpoint) + `${source ? '?s=' + source : ''}`;
-    return this.axios.post(url, data).then(d => d.data);
+    return this.axios.post(url, data, { signal }).then(d => d.data);
+  }
+
+  public async postHttp<T>(
+    endpoint: string,
+    data?: any,
+    source?: string,
+    signal?: any
+  ): Promise<T> {
+    const url = endpoint + `${source ? '?s=' + source : ''}`;
+    return this.axios.post(url, data, { signal }).then(d => d.data);
   }
 }

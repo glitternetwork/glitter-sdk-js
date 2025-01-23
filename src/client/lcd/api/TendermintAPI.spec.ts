@@ -2,6 +2,7 @@ import { TendermintAPI } from './TendermintAPI';
 import { Tx } from '../../../core/Tx';
 import { Tx as Tx_pb } from '@glitterprotocol/glitter.proto/cosmos/tx/v1beta1/tx';
 import { LCDClient } from '../LCDClient';
+import { Buffer } from 'buffer';
 
 const glitter = new LCDClient({
   chainID: 'xian',

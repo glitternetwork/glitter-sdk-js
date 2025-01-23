@@ -1,4 +1,5 @@
 import { CompactBitArray as CompactBitArray_pb } from '@glitterprotocol/glitter.proto/cosmos/crypto/multisig/v1beta1/multisig';
+import { Buffer } from 'buffer';
 
 export class CompactBitArray {
   constructor(public extra_bits_stored: number, public elems: Buffer) {}

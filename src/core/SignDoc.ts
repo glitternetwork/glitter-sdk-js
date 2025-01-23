@@ -2,6 +2,7 @@ import { JSONSerializable } from '../util/json';
 import { Fee } from './Fee';
 import { Msg } from './Msg';
 import * as Long from 'long';
+import { Buffer } from 'buffer';
 import { SignDoc as SignDoc_pb } from '@glitterprotocol/glitter.proto/cosmos/tx/v1beta1/tx';
 import { TxBody, AuthInfo, Tx } from './Tx';
 /**

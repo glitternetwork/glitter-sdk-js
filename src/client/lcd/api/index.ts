@@ -1,5 +1,6 @@
 export * from './AuthAPI';
 export * from './BankAPI';
+export * from './DatasetAPI';
 // export * from './DistributionAPI';
 // export * from './FeeGrantAPI';
 // export * from './GovAPI';

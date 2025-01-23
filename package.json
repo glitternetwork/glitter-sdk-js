@@ -1,6 +1,6 @@
 {
   "name": "@glitterprotocol/glitter-sdk",
-  "version": "1.0.12",
+  "version": "2.0.2",
   "description": "The JavaScript SDK for Glitter",
   "license": "MIT",
   "author": "Glitter Team",
@@ -85,13 +85,15 @@
     "typedoc": "^0.22.11",
     "typescript": "^4.5.5",
     "webpack": "^5.11.1",
+    "@types/long": "4.0.2",
     "webpack-bundle-analyzer": "^4.3.0",
     "webpack-cli": "^4.3.0"
   },
   "dependencies": {
     "@cosmjs/proto-signing": "^0.29.5",
+    "long": "4.0.0",
     "@ethersproject/wallet": "^5.7.0",
-    "@glitterprotocol/glitter.proto": "1.0.2-beta.1",
+    "@glitterprotocol/glitter.proto": "2.0.0-beta.5",
     "@terra-money/legacy.proto": "npm:@terra-money/terra.proto@^0.1.7",
     "@terra-money/terra.proto": "^2.1.0",
     "axios": "^0.27.2",
@@ -101,6 +103,7 @@
     "bufferutil": "^4.0.3",
     "cosmjs-utils": "^0.1.0",
     "decimal.js": "^10.2.1",
+    "events": "^3.3.0",
     "jscrypto": "^1.0.1",
     "readable-stream": "^3.6.0",
     "secp256k1": "^4.0.2",

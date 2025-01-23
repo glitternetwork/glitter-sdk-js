@@ -11,6 +11,7 @@ import {
 } from '../core';
 import { SignatureV2 } from '../core/SignatureV2';
 import { SignMode } from '@glitterprotocol/glitter.proto/cosmos/tx/signing/v1beta1/signing';
+import { Buffer } from 'buffer';
 
 /**
  * Abstract key interface that provides transaction signing features and Bech32 address

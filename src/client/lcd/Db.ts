@@ -11,7 +11,28 @@ import { SQLQueryRequest } from '@glitterprotocol/glitter.proto/index/query';
 import { Argument } from '@glitterprotocol/glitter.proto/index/sql_engine';
 import { AxiosRequestHeaders } from 'axios';
 import { MsgSend } from '../../core/bank/msgs';
-import { toGlitterArguments } from '../../util';
+import { CreateDatasetRequest } from '@glitterprotocol/glitter.proto/glitterchain/index/tx';
+import {
+  toGlitterArguments,
+  buildBatchInsertStatement,
+  buildUpdateStatement,
+  buildDeleteStatement,
+} from '../../util';
+import { getContractQueryResult } from '../../util/contract';
+import { CreateDataset } from '../../core/transfer/CreateDataset';
+import { EditDataset } from '../../core/transfer/EditDataset';
+import { EditTable } from '../../core/transfer/EditTable';
+import { RenewalDataset } from '../../core/transfer/RenewalDataset';
+import { Pledge } from '../../core/transfer/Pledge';
+import { ReleasePledge } from '../../core/transfer/ReleasePledge';
+import { EditDatasetRequest } from '@glitterprotocol/glitter.proto/glitterchain/index/tx';
+import { EditTableRequest } from '@glitterprotocol/glitter.proto/glitterchain/index/tx';
+import { RenewalDatasetRequest } from '@glitterprotocol/glitter.proto/glitterchain/index/tx';
+import {
+  PledgeRequest,
+  ReleasePledgeRequest,
+} from '@glitterprotocol/glitter.proto/glitterchain/consumer/tx';
+import { IPageParams } from './api/DatasetAPI';
 
 const GrantReader = 'reader';
 const GrantWriter = 'writer';
@@ -30,6 +51,41 @@ export class Db {
         sequence: d.getSequenceNumber(),
       };
     });
+  }
+
+  public getDatabase(name: string): Promise<any> {
+    return this.lcd.dataset.getDataset(name);
+  }
+
+  public getAllDataset(params: IPageParams): Promise<any> {
+    return this.lcd.dataset.getAllDataset(params);
+  }
+
+  public getAllCPDTs(params: IPageParams): Promise<any> {
+    return this.lcd.dataset.getAllCPDTs(params);
+  }
+  public getCPDTByDataset(name: string): Promise<any> {
+    return this.lcd.dataset.getCPDTByDataset(name);
+  }
+
+  public getAllExpirationTime(params: IPageParams): Promise<any> {
+    return this.lcd.dataset.getAllExpirationTime(params);
+  }
+
+  public getAllConsumer(params: IPageParams): Promise<any> {
+    return this.lcd.dataset.getAllConsumer(params);
+  }
+
+  public getConsumerByAddress(address: string): Promise<any> {
+    return this.lcd.dataset.getConsumerByAddress(address);
+  }
+
+  public getReleasingCPDTs(params: IPageParams): Promise<any> {
+    return this.lcd.dataset.getReleasingCPDTs(params);
+  }
+
+  public getReleasingCPDT(address: string): Promise<any> {
+    return this.lcd.dataset.getReleasingCPDT(address);
   }
 
   public accountNumber(): Promise<number> {
@@ -114,8 +170,8 @@ export class Db {
     );
   }
 
-  public async sqlExec(sql: string) {
-    const execut = new SQLMsg(this.key.accAddress, sql);
+  public async sqlExec(sql: string, args?: Argument[]) {
+    const execut = new SQLMsg(this.key.accAddress, sql, args);
     const txOptions = {
       msgs: [execut],
       fee: new Fee(10000000000000000, '10000000000000000agli', '', ''),
@@ -139,13 +195,88 @@ export class Db {
     return this.lcd.tx.broadcast(tx);
   }
 
-  public createDatabase(database: string) {
-    const sql = `CREATE DATABASE ${database}`;
-    return this.sqlExec(sql);
+  public async createDatabase(params: CreateDatasetRequest) {
+    const send = new CreateDataset(params);
+    const txOptions = {
+      msgs: [send],
+      fee: new Fee(10000000000000000, '10000000000000000agli', '', ''),
+      memo: 'sql transaction!',
+      feeDenoms: ['agli'],
+    };
+    const tx = await this.createAndSignTx(txOptions);
+    return this.lcd.tx.broadcast(tx);
   }
 
-  public async createTable(sql: string) {
-    return this.sqlExec(sql);
+  public async editDatabase(params: EditDatasetRequest) {
+    const send = new EditDataset(params);
+    const txOptions = {
+      msgs: [send],
+      fee: new Fee(10000000000000000, '10000000000000000agli', '', ''),
+      memo: 'sql transaction!',
+      feeDenoms: ['agli'],
+    };
+    const tx = await this.createAndSignTx(txOptions);
+    return this.lcd.tx.broadcast(tx);
+  }
+
+  public async createTable(params: EditTableRequest) {
+    const send = new EditTable(params);
+    const txOptions = {
+      msgs: [send],
+      fee: new Fee(10000000000000000, '10000000000000000agli', '', ''),
+      memo: 'sql transaction!',
+      feeDenoms: ['agli'],
+    };
+    const tx = await this.createAndSignTx(txOptions);
+    return this.lcd.tx.broadcast(tx);
+  }
+
+  public async editTable(params: EditTableRequest) {
+    const send = new EditTable(params);
+    const txOptions = {
+      msgs: [send],
+      fee: new Fee(10000000000000000, '10000000000000000agli', '', ''),
+      memo: 'sql transaction!',
+      feeDenoms: ['agli'],
+    };
+    const tx = await this.createAndSignTx(txOptions);
+    return this.lcd.tx.broadcast(tx);
+  }
+
+  public async RenewalDataset(params: RenewalDatasetRequest) {
+    const send = new RenewalDataset(params);
+    const txOptions = {
+      msgs: [send],
+      fee: new Fee(10000000000000000, '10000000000000000agli', '', ''),
+      memo: 'sql transaction!',
+      feeDenoms: ['agli'],
+    };
+    const tx = await this.createAndSignTx(txOptions);
+    return this.lcd.tx.broadcast(tx);
+  }
+
+  public async pledge(params: PledgeRequest) {
+    const send = new Pledge(params);
+    const txOptions = {
+      msgs: [send],
+      fee: new Fee(10000000000000000, '10000000000000000agli', '', ''),
+      memo: 'sql transaction!',
+      feeDenoms: ['agli'],
+    };
+    const tx = await this.createAndSignTx(txOptions);
+    return this.lcd.tx.broadcast(tx);
+  }
+
+  public async releasePledge(params: ReleasePledgeRequest) {
+    const send = new ReleasePledge(params);
+    const txOptions = {
+      msgs: [send],
+      fee: new Fee(10000000000000000, '10000000000000000agli', '', ''),
+      memo: 'sql transaction!',
+      feeDenoms: ['agli'],
+    };
+    const tx = await this.createAndSignTx(txOptions);
+    return this.lcd.tx.broadcast(tx);
   }
 
   public dropTable(database: string, table: string) {
@@ -194,10 +325,16 @@ export class Db {
         typeof columns[key] === 'string' ? `'${columns[key]}'` : columns[key];
       vals.push(value);
     });
-    const sql = `insert into ${database}.${table} (${col_name.join(
-      ','
-    )}) values (${vals.join(',')})`;
-    return this.sqlExec(sql);
+    const { sql, values } = buildBatchInsertStatement(
+      database,
+      table,
+      col_name,
+      [vals]
+    );
+    // const sql = `insert into ${database}.${table} (${col_name.join(
+    //   ','
+    // )}) values (${vals.join(',')})`;
+    return this.sqlExec(sql, values);
   }
 
   public async batchInsert(
@@ -216,12 +353,18 @@ export class Db {
         const value = typeof col[key] === 'string' ? `'${col[key]}'` : col[key];
         val.push(value);
       });
-      vals.push(`(${val.join(',')})`);
+      vals.push(val);
     });
-    const sql = `insert into ${database}.${table} (${col_name.join(
-      ','
-    )}) values ${vals.join(',')}`;
-    return this.sqlExec(sql);
+    const { sql, values } = buildBatchInsertStatement(
+      database,
+      table,
+      col_name,
+      vals
+    );
+    // const sql = `insert into ${database}.${table} (${col_name.join(
+    //   ','
+    // )}) values ${vals.join(',')}`;
+    return this.sqlExec(sql, values);
   }
 
   public async update(
@@ -230,21 +373,27 @@ export class Db {
     columns: Record<string, any>,
     where: Record<string, any>
   ) {
-    const col = Object.keys(columns).map(key => {
-      const value =
-        typeof columns[key] === 'string' ? `'${columns[key]}'` : columns[key];
-      return `${key}=${value}`;
-    });
-    const whr = Object.keys(where).map(key => {
-      const value =
-        typeof where[key] === 'string' ? `'${where[key]}'` : where[key];
-      return `${key}=${value}`;
-    });
-    let sql = `UPDATE ${database}.${table} SET ${col.join(',')} `;
-    if (where) {
-      sql += `where ${whr.join(' AND ')}`;
-    }
-    return this.sqlExec(sql);
+    // const col = Object.keys(columns).map(key => {
+    //   const value =
+    //     typeof columns[key] === 'string' ? `'${columns[key]}'` : columns[key];
+    //   return `${key}=${value}`;
+    // });
+    // const whr = Object.keys(where).map(key => {
+    //   const value =
+    //     typeof where[key] === 'string' ? `'${where[key]}'` : where[key];
+    //   return `${key}=${value}`;
+    // });
+    // let sql = `UPDATE ${database}.${table} SET ${col.join(',')} `;
+    // if (where) {
+    //   sql += `where ${whr.join(' AND ')}`;
+    // }
+    const { sql, values } = buildUpdateStatement(
+      database,
+      table,
+      columns,
+      where
+    );
+    return this.sqlExec(sql, values);
   }
 
   public async delete(
@@ -262,23 +411,31 @@ export class Db {
       throw new Error('too much will to delete');
     }
 
-    let sql = `DELETE FROM ${database}.${table} `;
-    const whr = Object.keys(where).map(key => {
-      const value =
-        typeof where[key] === 'string' ? `'${where[key]}'` : where[key];
-      return `${key}=${value}`;
-    });
-    if (where) {
-      sql += `where ${whr.join(' AND ')}`;
-    }
+    // let sql = `DELETE FROM ${database}.${table} `;
+    // const whr = Object.keys(where).map(key => {
+    //   const value =
+    //     typeof where[key] === 'string' ? `'${where[key]}'` : where[key];
+    //   return `${key}=${value}`;
+    // });
+    // if (where) {
+    //   sql += `where ${whr.join(' AND ')}`;
+    // }
 
-    if (orderBy) {
-      sql += ` ORDER BY ${orderBy} ${asc ? 'ASC' : 'DESC'}`;
-    }
+    // if (orderBy) {
+    //   sql += ` ORDER BY ${orderBy} ${asc ? 'ASC' : 'DESC'}`;
+    // }
 
-    sql += ` LIMIT ${limit || 50}`;
+    // sql += ` LIMIT ${limit || 50}`;
+    const { sql, values } = buildDeleteStatement(
+      database,
+      table,
+      where,
+      orderBy,
+      asc,
+      limit
+    );
 
-    return this.sqlExec(sql);
+    return this.sqlExec(sql, values);
   }
 
   public async query(
@@ -300,7 +457,47 @@ export class Db {
       });
     }
     const r = this.lcd.apiRequester.post(endpoint, req, source);
-    return r;
+    return await r.then((r: any) => {
+      const { result = [] } = r || {};
+      const rawRow: any = getContractQueryResult(result);
+      return { result: rawRow };
+    });
+  }
+
+  public async queryV2(
+    sqlTemplate: string,
+    datasetName: string,
+    keyWords?: string[],
+    source?: string
+  ) {
+    const endpoint = `/glitterchain/index/dataset/` + datasetName;
+    const argumentsArr: Argument[] = toGlitterArguments(keyWords || []);
+    let req: any = {};
+    if (argumentsArr && argumentsArr.length) {
+      req = SQLQueryRequest.fromPartial({
+        sql: sqlTemplate,
+        arguments: argumentsArr,
+      });
+    } else {
+      req = SQLQueryRequest.fromPartial({
+        sql: sqlTemplate,
+      });
+    }
+    const { dateset }: any = await this.lcd.apiRequester.get(endpoint);
+    if (dateset && dateset.hosts) {
+      const url = dateset.hosts + '/api/v1/simple_sql_query';
+      const r = this.lcd.apiRequester.postHttp(url, req, source);
+      return await r
+        .then((r: any) => {
+          const { result = [] } = r || {};
+          const rawRow: any = getContractQueryResult(result);
+          return { result: rawRow };
+        })
+        .catch(e => {
+          console.log(e, 'error');
+        });
+    }
+    return new Error('obsent host');
   }
 
   public async sqlGrant(
